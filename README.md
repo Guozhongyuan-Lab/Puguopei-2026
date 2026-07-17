@@ -1,4 +1,4 @@
-# Puguopei-iMeta-2026
+# Puguopei-2026
 Interfacial Metamorphosis and Archaeal-Bacterial Coupling Drive Deterministic Multi-Kingdom Assembly and Metabolic Reprogramming in the Terrestrial Plastisphere
 Declaration of Contribution and Responsibility
 Primary Code Developer: [Puguopei], First Author. Responsible for the technical implementation and script development.
