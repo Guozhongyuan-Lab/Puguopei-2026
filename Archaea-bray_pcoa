@@ -6,9 +6,9 @@ library(vegan)
 library(ggthemes)
 library(readxl)
 
-setwd("D:/A研究生各种安排/AAAAA小论文/A四周极限写作/JHM审后大修/重跑图/beta多样性")
+setwd("XXXXXX")
 
-data_raw <- read_excel("古菌APMS-PSS.xlsx", sheet = 1)  
+data_raw <- read_excel("ASV_abundance.xlsx", sheet = 1)  
 
 rownames(data_raw) <- data_raw[[1]]  
 data <- data_raw[, -1]  
@@ -17,7 +17,7 @@ data <- as.matrix(data)
 data <- data / apply(data, 2, sum)
 data <- t(data)  
 
-group_raw <- read_excel("分组表.xlsx", sheet = 1)  
+group_raw <- read_excel("group_info.xlsx", sheet = 1)  
 
 colnames(group_raw)[colnames(group_raw) == "ID"] <- "Sample_ID"  
 
@@ -26,7 +26,7 @@ group <- group_raw
 
 bray <- vegdist(data, method = 'bray')
 bray_matrix <- as.matrix(bray)
-write.table(bray_matrix, "古菌bray-crutis.txt", sep = "\t", quote = FALSE)
+write.table(bray_matrix, "bray_curtis_matrix.txt", sep = "\t", quote = FALSE)
 
 pcoa <- cmdscale(bray, k = 3, eig = TRUE)  
 
@@ -62,9 +62,9 @@ p <- ggplot(pcoa_result, aes(x = PCoA1, y = PCoA2, color = group)) +
   geom_hline(aes(yintercept = 0), colour = "#BEBEBE", linetype = "dashed") +
   geom_vline(aes(xintercept = 0), colour = "#BEBEBE", linetype = "dashed")
 
-ggsave("古菌bra_pcoa1.png", plot = p, width = 5, height = 5, dpi = 600)  
-ggsave("古菌bra_pcoa1.tiff", plot = p, width = 5, height = 5, dpi = 600)  
-ggsave("古菌bra_pcoa1.pdf", plot = p, width = 5, height = 5)  
+ggsave("pcoa_plot.png", plot = p, width = 5, height = 5, dpi = 600)  
+ggsave("pcoa_plot.tiff", plot = p, width = 5, height = 5, dpi = 600)  
+ggsave("pcoa_plot.pdf", plot = p, width = 5, height = 5)  
 
 p_with_ellipse <- p + stat_ellipse(data = pcoa_result,
                                    geom = "polygon",
@@ -77,11 +77,11 @@ p_with_ellipse <- p + stat_ellipse(data = pcoa_result,
   scale_fill_manual(values = c("#2f7eb0", "#d00000"))
 print(p_with_ellipse)
 
-ggsave("古菌bra_pcoa_ellipse.png", plot = p_with_ellipse, width = 5, height = 5, dpi = 600)  
-ggsave("古菌bra_pcoa_ellipse.tiff", plot = p_with_ellipse, width = 5, height = 5, dpi = 600)  
-ggsave("古菌bra_pcoa_ellipse.pdf", plot = p_with_ellipse, width = 5, height = 5)  
+ggsave("pcoa_ellipse.png", plot = p_with_ellipse, width = 5, height = 5, dpi = 600)  
+ggsave("pcoa_ellipse.tiff", plot = p_with_ellipse, width = 5, height = 5, dpi = 600)  
+ggsave("pcoa_ellipse.pdf", plot = p_with_ellipse, width = 5, height = 5)  
 
-png(file = "古菌bray_pcoa.png", width = 5, height = 5, res = 600, units = "in")  
+png(file = "pcoa_marginal.png", width = 5, height = 5, res = 600, units = "in")  
 p_marginal <- ggMarginal(
   p_with_ellipse,
   type = "density",
@@ -93,7 +93,7 @@ p_marginal <- ggMarginal(
 print(p_marginal)
 dev.off()  
 
-tiff(file = "古菌bray_pcoa.tiff", width = 5, height = 5, res = 600, units = "in")  
+tiff(file = "pcoa_marginal.tiff", width = 5, height = 5, res = 600, units = "in")  
 p_marginal <- ggMarginal(
   p_with_ellipse,
   type = "density",
@@ -105,7 +105,7 @@ p_marginal <- ggMarginal(
 print(p_marginal)
 dev.off()  
 
-pdf(file = "古菌bray_pcoa.pdf", width = 5, height = 5)  
+pdf(file = "pcoa_marginal.pdf", width = 5, height = 5)  
 p_marginal <- ggMarginal(
   p_with_ellipse,
   type = "density",
